@@ -7,16 +7,25 @@ import {
   Linking,
   ScrollView,
   RefreshControl,
+  FlatList,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 
 export default function App() {
+  const renderItem = ({ item }) => {
+    return (
+      <View style={styles.item}>
+        <Text style={styles.text}>{item.item}</Text>
+      </View>
+    );
+  };
+
   const [items, setItems] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   useEffect(() => {
     let ar = [];
     for (let index = 0; index < 25; index++) {
-      ar.push({ key: index, item: "item" + index });
+      ar.push({ key: index.toString(), item: "item" + index });
     }
     setItems(ar);
   }, []);
@@ -26,7 +35,12 @@ export default function App() {
   // const [counter, setCounter] = useState(0);
   return (
     <View style={styles.body}>
-      <ScrollView
+      <FlatList
+        // inverted
+        // numColumns={3}
+        data={items}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -36,18 +50,10 @@ export default function App() {
               setItems([...items, { key: 253, item: "item" + 253 }]);
               setRefreshing(false);
             }}
+            colors={["#ff00ff"]}
           />
         }
-      >
-        {items &&
-          items.map((item) => {
-            return (
-              <View key={item.index} style={styles.item}>
-                <Text style={styles.text}>{item.item}</Text>
-              </View>
-            );
-          })}
-      </ScrollView>
+      />
     </View>
   );
 }
