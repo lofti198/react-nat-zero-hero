@@ -1,40 +1,53 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, Linking } from "react-native";
-import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Linking,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
+import React, { useState, useEffect } from "react";
+
 export default function App() {
-  const [text, setText] = useState("Mash");
-  const [session, setSession] = useState({ number: 6, title: "name" });
-  const [current, setCurrent] = useState(true);
-  const [counter, setCounter] = useState(0);
+  const [items, setItems] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  useEffect(() => {
+    let ar = [];
+    for (let index = 0; index < 25; index++) {
+      ar.push({ key: index, item: "item" + index });
+    }
+    setItems(ar);
+  }, []);
+  // const [items, setItems] = useState(() => {});
+  // const [session, setSession] = useState({ number: 6, title: "name" });
+  // const [current, setCurrent] = useState(true);
+  // const [counter, setCounter] = useState(0);
   return (
     <View style={styles.body}>
-      <View style={styles.container1}>
-        <View style={styles.view1}>
-          <Text style={styles.text}>1</Text>
-        </View>
-        <View style={styles.view2}></View>
-        <View style={styles.view3}></View>
-      </View>
-      <View style={styles.container2}>
-        <View style={styles.view4}></View>
-      </View>
-      <View style={styles.container3}>
-        <View style={styles.view5}></View>
-      </View>
-      <View style={styles.container4}>
-        <View style={styles.view6}></View>
-        <View style={styles.view7}></View>
-      </View>
-      {/* <View style={styles.view1}>
-        <Text style={styles.text}>1</Text>
-      </View>
-      <View style={styles.view2}>
-        <Text style={styles.text}>2</Text>
-      </View>
-      <View style={styles.view3}>
-        <Text style={styles.text}>3</Text>
-      </View> */}
-      {/* <StatusBar style="auto" /> */}
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => {
+              console.log("hello");
+              setRefreshing(true);
+              setItems([...items, { key: 253, item: "item" + 253 }]);
+              setRefreshing(false);
+            }}
+          />
+        }
+      >
+        {items &&
+          items.map((item) => {
+            return (
+              <View key={item.index} style={styles.item}>
+                <Text style={styles.text}>{item.item}</Text>
+              </View>
+            );
+          })}
+      </ScrollView>
     </View>
   );
 }
@@ -52,6 +65,10 @@ const styles = StyleSheet.create({
     // borderColor: "#ff00ff",
     // borderRadius: 10,
     // margin: 40,
+  },
+  item: {
+    margin: 5,
+    backgroundColor: "green",
   },
   container1: {
     flexDirection: "row",
