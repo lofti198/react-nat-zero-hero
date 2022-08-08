@@ -8,7 +8,24 @@ export default function App() {
   const [counter, setCounter] = useState(0);
   return (
     <View style={styles.body}>
-      <View style={styles.view1}>
+      <View style={styles.container1}>
+        <View style={styles.view1}>
+          <Text style={styles.text}>1</Text>
+        </View>
+        <View style={styles.view2}></View>
+        <View style={styles.view3}></View>
+      </View>
+      <View style={styles.container2}>
+        <View style={styles.view4}></View>
+      </View>
+      <View style={styles.container3}>
+        <View style={styles.view5}></View>
+      </View>
+      <View style={styles.container4}>
+        <View style={styles.view6}></View>
+        <View style={styles.view7}></View>
+      </View>
+      {/* <View style={styles.view1}>
         <Text style={styles.text}>1</Text>
       </View>
       <View style={styles.view2}>
@@ -16,7 +33,7 @@ export default function App() {
       </View>
       <View style={styles.view3}>
         <Text style={styles.text}>3</Text>
-      </View>
+      </View> */}
       {/* <StatusBar style="auto" /> */}
     </View>
   );
@@ -27,7 +44,7 @@ const styles = StyleSheet.create({
     // width: "100%",
     // height: "50%",
     flex: 1,
-    flexDirection: "row",
+    // flexDirection: "row",
     backgroundColor: "#0000ff",
     alignItems: "stretch",
     justifyContent: "center",
@@ -36,29 +53,55 @@ const styles = StyleSheet.create({
     // borderRadius: 10,
     // margin: 40,
   },
-  view1: {
-    flex: 3,
-    // width: 100,
-    // height: 100,
+  container1: {
+    flexDirection: "row",
+    flex: 1,
     backgroundColor: "green",
+  },
+  container2: {
+    flex: 1,
+    backgroundColor: "red",
+  },
+  container3: {
+    flex: 1,
+    backgroundColor: "yellow",
+  },
+  container4: {
+    flex: 6,
+    backgroundColor: "blue",
+    flexDirection: "row",
+  },
+  view4: {
+    flex: 1,
+    backgroundColor: "black",
+  },
+  view5: {
+    flex: 1,
+    backgroundColor: "grey",
+  },
+  view6: {
+    flex: 1,
+    backgroundColor: "black",
+  },
+  view7: {
+    flex: 1,
+    backgroundColor: "pink",
+  },
+  view1: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "green",
   },
   view2: {
-    flex: 1,
-    // width: 100,
-    // height: 100,
+    flex: 2,
+
     backgroundColor: "red",
-    alignItems: "center",
-    justifyContent: "center",
   },
   view3: {
-    flex: 1,
-    // width: 100,
-    // height: 100,
+    flex: 3,
+
     backgroundColor: "yellow",
-    alignItems: "center",
-    justifyContent: "center",
   },
   text: {
     color: "red",
