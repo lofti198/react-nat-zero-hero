@@ -8,6 +8,7 @@ import {
   ScrollView,
   RefreshControl,
   FlatList,
+  SectionList,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 
@@ -21,6 +22,16 @@ export default function App() {
   };
 
   const [items, setItems] = useState([]);
+  const [DATA, setDATA] = useState([
+    {
+      title: "t1",
+      data: ["item 1-1", "item 1-2"],
+    },
+    {
+      title: "t2",
+      data: ["item 2-1", "item 2-2"],
+    },
+  ]);
   const [refreshing, setRefreshing] = useState(false);
   useEffect(() => {
     let ar = [];
@@ -35,25 +46,59 @@ export default function App() {
   // const [counter, setCounter] = useState(0);
   return (
     <View style={styles.body}>
-      <FlatList
-        // inverted
-        // numColumns={3}
-        data={items}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={() => {
-              console.log("hello");
-              setRefreshing(true);
-              setItems([...items, { key: 253, item: "item" + 253 }]);
-              setRefreshing(false);
-            }}
-            colors={["#ff00ff"]}
-          />
-        }
-      />
+      {
+        <SectionList
+          keyExtractor={(item, index) => index}
+          sections={DATA}
+          renderItem={({ item }) => <Text style={styles.text}>{item}</Text>}
+          renderSectionHeader={({ section }) => (
+            <View style={styles.item}>
+              <Text style={styles.text}>{section.title}</Text>
+            </View>
+          )}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => {
+                console.log("hello");
+                setRefreshing(true);
+                setDATA((prev) => {
+                  const nextIndex = prev.length + 1;
+                  return [
+                    ...prev,
+                    {
+                      title: `${nextIndex}t`,
+                      data: [`item ${nextIndex}-1`, `item ${nextIndex}-2`],
+                    },
+                  ];
+                });
+                // setItems([...items, { key: 253, item: "item" + 253 }]);
+                setRefreshing(false);
+              }}
+              colors={["#ff00ff"]}
+            />
+          }
+        />
+        // <FlatList
+        //   inverted
+        //   // numColumns={2}
+        //   data={items}
+        //   renderItem={renderItem}
+        //   keyExtractor={(item, index) => index.toString()}
+        //   refreshControl={
+        //     <RefreshControl
+        //       refreshing={refreshing}
+        //       onRefresh={() => {
+        //         console.log("hello");
+        //         setRefreshing(true);
+        //         setItems([...items, { key: 253, item: "item" + 253 }]);
+        //         setRefreshing(false);
+        //       }}
+        //       colors={["#ff00ff"]}
+        //     />
+        //   }
+        // />
+      }
     </View>
   );
 }
