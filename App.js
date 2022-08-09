@@ -9,76 +9,88 @@ import {
   RefreshControl,
   FlatList,
   SectionList,
+  TextInput,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 
 export default function App() {
-  const renderItem = ({ item }) => {
-    return (
-      <View style={styles.item}>
-        <Text style={styles.text}>{item.item}</Text>
-      </View>
-    );
-  };
+  const [name, setName] = useState("");
+  // const renderItem = ({ item }) => {
+  //   return (
+  //     <View style={styles.item}>
+  //       <Text style={styles.text}>{item.item}</Text>
+  //     </View>
+  //   );
+  // };
 
-  const [items, setItems] = useState([]);
-  const [DATA, setDATA] = useState([
-    {
-      title: "t1",
-      data: ["item 1-1", "item 1-2"],
-    },
-    {
-      title: "t2",
-      data: ["item 2-1", "item 2-2"],
-    },
-  ]);
-  const [refreshing, setRefreshing] = useState(false);
-  useEffect(() => {
-    let ar = [];
-    for (let index = 0; index < 25; index++) {
-      ar.push({ key: index.toString(), item: "item" + index });
-    }
-    setItems(ar);
-  }, []);
+  // const [items, setItems] = useState([]);
+  // const [DATA, setDATA] = useState([
+  //   {
+  //     title: "t1",
+  //     data: ["item 1-1", "item 1-2"],
+  //   },
+  //   {
+  //     title: "t2",
+  //     data: ["item 2-1", "item 2-2"],
+  //   },
+  // ]);
+  // const [refreshing, setRefreshing] = useState(false);
+  // useEffect(() => {
+  //   let ar = [];
+  //   for (let index = 0; index < 25; index++) {
+  //     ar.push({ key: index.toString(), item: "item" + index });
+  //   }
+  //   setItems(ar);
+  // }, []);
   // const [items, setItems] = useState(() => {});
   // const [session, setSession] = useState({ number: 6, title: "name" });
   // const [current, setCurrent] = useState(true);
   // const [counter, setCounter] = useState(0);
   return (
     <View style={styles.body}>
+      <TextInput
+        style={styles.input}
+        placeholder="e.g"
+        keyboardType="numeric"
+        maxLength={4}
+        onChangeText={(value) => {
+          setName(value);
+        }}
+      />
+      <Text>{name}</Text>
       {
-        <SectionList
-          keyExtractor={(item, index) => index}
-          sections={DATA}
-          renderItem={({ item }) => <Text style={styles.text}>{item}</Text>}
-          renderSectionHeader={({ section }) => (
-            <View style={styles.item}>
-              <Text style={styles.text}>{section.title}</Text>
-            </View>
-          )}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={() => {
-                console.log("hello");
-                setRefreshing(true);
-                setDATA((prev) => {
-                  const nextIndex = prev.length + 1;
-                  return [
-                    ...prev,
-                    {
-                      title: `${nextIndex}t`,
-                      data: [`item ${nextIndex}-1`, `item ${nextIndex}-2`],
-                    },
-                  ];
-                });
-                // setItems([...items, { key: 253, item: "item" + 253 }]);
-                setRefreshing(false);
-              }}
-              colors={["#ff00ff"]}
-            />
-          }
-        />
+        // <SectionList
+        //   keyExtractor={(item, index) => index}
+        //   sections={DATA}
+        //   renderItem={({ item }) => <Text style={styles.text}>{item}</Text>}
+        //   renderSectionHeader={({ section }) => (
+        //     <View style={styles.item}>
+        //       <Text style={styles.text}>{section.title}</Text>
+        //     </View>
+        //   )}
+        //   refreshControl={
+        //     <RefreshControl
+        //       refreshing={refreshing}
+        //       onRefresh={() => {
+        //         console.log("hello");
+        //         setRefreshing(true);
+        //         setDATA((prev) => {
+        //           const nextIndex = prev.length + 1;
+        //           return [
+        //             ...prev,
+        //             {
+        //               title: `${nextIndex}t`,
+        //               data: [`item ${nextIndex}-1`, `item ${nextIndex}-2`],
+        //             },
+        //           ];
+        //         });
+        //         // setItems([...items, { key: 253, item: "item" + 253 }]);
+        //         setRefreshing(false);
+        //       }}
+        //       colors={["#ff00ff"]}
+        //     />
+        //   }
+        // />
         // <FlatList
         //   inverted
         //   // numColumns={2}
@@ -117,6 +129,7 @@ const styles = StyleSheet.create({
     // borderRadius: 10,
     // margin: 40,
   },
+  input: { borderWidth: 1 },
   item: {
     margin: 5,
     backgroundColor: "green",
